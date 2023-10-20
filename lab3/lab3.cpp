@@ -62,7 +62,6 @@ DWORD WINAPI MultElement(LPVOID lpParam)
 		return 0;
 	}
 
-
 	for (int i = 0; i < len; i++)
 	{
 		if (res[i] > 0)
@@ -75,10 +74,9 @@ DWORD WINAPI MultElement(LPVOID lpParam)
 			break;
 		}
 	}
-	LeaveCriticalSection(&cs);
-	DeleteCriticalSection(&cs);
-	SetEvent(MultElementEvent);
 
+	LeaveCriticalSection(&cs);
+	SetEvent(MultElementEvent);
 
 	return 0;
 }
@@ -151,5 +149,8 @@ int main()
 
 	cout << endl << "Result of multiplying the elements of the final array - " << result << endl;
 
+	DeleteCriticalSection(&cs);
+	CloseHandle(WorkEvent);
+	CloseHandle(MultElementEvent);
 	return 0;
 }
